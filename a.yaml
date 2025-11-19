@@ -1,0 +1,6 @@
+{'maintainer': 'Mert Cobanov',
+ 'pca_params': {'n_components': 224},
+ 'umap_params': {'metrics': ['euclidean', 'l1', 'manhattan'],
+                 'min_dist': [0.01, 0.1, 0.5],
+                 'spread': 1.0},
+ 'visualize_params': {'median_threshold': 6}}
