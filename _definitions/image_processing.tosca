@@ -1,0 +1,26 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+
+imports:
+  - file: .tosca
+    namespace_uri: MYRTUS-Mobility
+    namespace_prefix: MYRTUS-
+
+node_types:
+  software_component_nodes.image_processing:
+
+    metadata:
+      targetNamespace: "MYRTUS-Mobility"
+      abstract: ""
+      final: ""
+    properties:
+      processingRequirement:
+      	type: float
+      	
+      dockerImage:
+      	type: string
+      	
+    requirements:
+      - host:
+          capability: tosca.capabilities.Compute
+          relationship: tosca.relationships.hostedOn
+          occurrences: [ 1, 1 ]

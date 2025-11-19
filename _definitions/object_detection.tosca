@@ -1,0 +1,25 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+
+
+node_types:
+  software_component_nodes.object_detection:
+
+    metadata:
+      targetNamespace: "MYRTUS-mobility"
+      abstract: ""
+      final: ""
+    properties:
+      algorithm:
+      	type: string
+      	
+      accuracy:
+      	type: string
+      	
+      dockerImage:
+      	type: string
+      	
+    requirements:
+      - host:
+          capability: tosca.capabilities.Compute
+          relationship: tosca.relationships.hostedOn
+          occurrences: [ 1, 1 ]

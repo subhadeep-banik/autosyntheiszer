@@ -1,0 +1,23 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+
+imports:
+  - file: .tosca
+    namespace_uri: MYRTUS-mobility
+    namespace_prefix: MYRTUS-
+
+node_types:
+  software_component_nodes.object_tracking:
+    derived_from: tosca.nodes.SoftwareComponent
+    metadata:
+      targetNamespace: "MYRTUS-mobility"
+      abstract: ""
+      final: ""
+    properties:
+      dockerImage:
+      	type: string
+      	
+    requirements:
+      - host:
+          capability: tosca.capabilities.Compute
+          relationship: tosca.relationships.hostedOn
+          occurrences: [ 1, 1 ]
