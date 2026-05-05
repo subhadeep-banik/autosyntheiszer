@@ -1,0 +1,200 @@
+name:   enc_s01_n01
+   -slevel: 1
+   -index: 1
+   -cycles: 1886.000000
+   -energy: 0.695352
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n02
+   -slevel: 1
+   -index: 2
+   -cycles: 1793.000000
+   -energy: 0.463266
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n03
+   -slevel: 1
+   -index: 3
+   -cycles: 1492.000000
+   -energy: 0.221719
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n04
+   -slevel: 1
+   -index: 4
+   -cycles: 1362.000000
+   -energy: 0.942453
+   -function: encryption
+   -type: software
+
+name:   enc_s02_n01
+   -slevel: 2
+   -index: 1
+   -cycles: 1059.000000
+   -energy: 0.763620
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n05
+   -slevel: 1
+   -index: 5
+   -cycles: 1540.000000
+   -energy: 0.485773
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n06
+   -slevel: 1
+   -index: 6
+   -cycles: 1736.000000
+   -energy: 0.237131
+   -function: encryption
+   -type: software
+
+name:   enc_s02_n02
+   -slevel: 2
+   -index: 2
+   -cycles: 1567.000000
+   -energy: 0.363870
+   -function: encryption
+   -type: software
+
+name:   enc_s02_n03
+   -slevel: 2
+   -index: 3
+   -cycles: 1530.000000
+   -energy: 1.073358
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n07
+   -slevel: 1
+   -index: 7
+   -cycles: 1067.000000
+   -energy: 0.942270
+   -function: encryption
+   -type: software
+
+name:   enc_s02_n04
+   -slevel: 2
+   -index: 4
+   -cycles: 1802.000000
+   -energy: 1.082025
+   -function: encryption
+   -type: software
+
+name:   enc_s00_n01
+   -slevel: 0
+   -index: 1
+   -cycles: 1069.000000
+   -energy: 0.942636
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n08
+   -slevel: 1
+   -index: 8
+   -cycles: 1456.000000
+   -energy: 0.289987
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n09
+   -slevel: 1
+   -index: 9
+   -cycles: 1229.000000
+   -energy: 0.636575
+   -function: encryption
+   -type: software
+
+name:   enc_s00_n02
+   -slevel: 0
+   -index: 2
+   -cycles: 1919.000000
+   -energy: 0.757593
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n10
+   -slevel: 1
+   -index: 10
+   -cycles: 1198.000000
+   -energy: 0.759485
+   -function: encryption
+   -type: software
+
+name:   enc_s02_n05
+   -slevel: 2
+   -index: 5
+   -cycles: 1370.000000
+   -energy: 0.915628
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n11
+   -slevel: 1
+   -index: 11
+   -cycles: 1091.000000
+   -energy: 0.719934
+   -function: encryption
+   -type: software
+
+name:   enc_s02_n06
+   -slevel: 2
+   -index: 6
+   -cycles: 1873.000000
+   -energy: 0.865839
+   -function: encryption
+   -type: software
+
+name:   enc_s02_n07
+   -slevel: 2
+   -index: 7
+   -cycles: 1996.000000
+   -energy: 0.624429
+   -function: encryption
+   -type: software
+
+name:   enc_s00_n03
+   -slevel: 0
+   -index: 3
+   -cycles: 1925.000000
+   -energy: 0.654138
+   -function: encryption
+   -type: software
+
+name:   enc_s00_n04
+   -slevel: 0
+   -index: 4
+   -cycles: 1336.000000
+   -energy: 0.966837
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n12
+   -slevel: 1
+   -index: 12
+   -cycles: 1729.000000
+   -energy: 0.858804
+   -function: encryption
+   -type: software
+
+name:   enc_s02_n08
+   -slevel: 2
+   -index: 8
+   -cycles: 1124.000000
+   -energy: 0.238290
+   -function: encryption
+   -type: software
+
+name:   enc_s00_n05
+   -slevel: 0
+   -index: 5
+   -cycles: 1545.000000
+   -energy: 0.875360
+   -function: encryption
+   -type: software
+

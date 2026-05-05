@@ -1,0 +1,24 @@
+name:   enc_s01_n01
+   -slevel: 1
+   -index: 1
+   -cycles: 5955.029785
+   -energy: 0.000000
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n02
+   -slevel: 1
+   -index: 2
+   -cycles: 502968.781250
+   -energy: 0.000000
+   -function: encryption
+   -type: software
+
+name:   enc_s01_n03
+   -slevel: 1
+   -index: 3
+   -cycles: 8877.434570
+   -energy: 0.000000
+   -function: encryption
+   -type: software
+
