@@ -366,7 +366,7 @@ extern int timer_getoverrun (timer_t __timerid) __attribute__ ((__nothrow__ , __
 extern int timespec_get (struct timespec *__ts, int __base)
      __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__ (1)));
 
-unsigned char sbox_f2[256] =
+unsigned char sboxf5[256] =
 {
    0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
    0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0,
@@ -385,7 +385,7 @@ unsigned char sbox_f2[256] =
    0xE1, 0xF8, 0x98, 0x11, 0x69, 0xD9, 0x8E, 0x94, 0x9B, 0x1E, 0x87, 0xE9, 0xCE, 0x55, 0x28, 0xDF,
    0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
 };
-void rotate_f2(unsigned char *in) {
+void rotatef5(unsigned char *in) {
         unsigned char a,c;
         a = in[0];
         for(c=0;c<3;c++)
@@ -393,7 +393,7 @@ void rotate_f2(unsigned char *in) {
         in[3] = a;
         return;
 }
-unsigned char rcon_f2(unsigned char in) {
+unsigned char rconf5(unsigned char in) {
         unsigned char c=1;
         if(in == 0)
                 return 0;
@@ -408,32 +408,40 @@ unsigned char rcon_f2(unsigned char in) {
         }
         return c;
 }
-void schedule_core_f2(unsigned char *in, unsigned char i) {
+void schedule_coref5(unsigned char *in, unsigned char i) {
         char a;
-        rotate_f2(in);
+        rotatef5(in);
         for(a = 0; a < 4; a++)
-                in[a] = sbox_f2[in[a]];
-        in[0] ^= rcon_f2(i);
+                in[a] = sboxf5[in[a]];
+        in[0] ^= rconf5(i);
 }
-void expand_keyf2(unsigned char *in) {
-        unsigned char t[4];
-        unsigned char c = 16;
- unsigned char i = 1;
-        unsigned char a;
-        while(c < 176) {
-                for(a = 0; a < 4; a++)
-                        t[a] = in[a + c - 4];
-                if(c % 16 == 0) {
-   schedule_core_f2(t,i);
-   i++;
-  }
-                for(a = 0; a < 4; a++) {
-                        in[c] = in[c - 16] ^ t[a];
-                        c++;
-                }
+static void schedule_subf5(unsigned char *in ) {
+    char a;
+    for(a = 0; a < 4; a++)
+        in[a] = sboxf5[in[a]];
+}
+void expand_keyf5(unsigned char *in) {
+    unsigned char t[4];
+    unsigned char c = 32;
+    unsigned char i = 1;
+    unsigned char a;
+    while(c < 240) {
+        for(a = 0; a < 4; a++)
+            t[a] = in[a + c - 4];
+        if(c % 32 == 0) {
+            schedule_coref5(t,i);
+            i++;
         }
+        if(c % 32 == 16) {
+            schedule_subf5(t);
+        }
+        for(a = 0; a < 4; a++) {
+            in[c] = in[c - 32] ^ t[a];
+            c++;
+        }
+    }
 }
-unsigned char gmul2( unsigned char c)
+unsigned char gmul2f5( unsigned char c)
 {
 unsigned char b;
                 b = c & 0x80;
@@ -443,41 +451,35 @@ unsigned char b;
   }
 return c;
 }
-void Mcol (unsigned char* CT)
+void Mcolf5 (unsigned char* CT)
 {
 unsigned char y1,y2,y3,y4,q0,q1,q2,q3;
 int i;
 for(i=0;i<16;i+=4) {
-                y1 = gmul2(CT[i+0]) ^ CT[i+2] ;
-                y2 = gmul2(CT[i+1]) ^ CT[i+3] ;
-                y3 = gmul2(CT[i+2]) ^ CT[i+0] ;
-                y4 = gmul2(CT[i+3]) ^ CT[i+1] ;
+                y1 = gmul2f5(CT[i+0]) ^ CT[i+2] ;
+                y2 = gmul2f5(CT[i+1]) ^ CT[i+3] ;
+                y3 = gmul2f5(CT[i+2]) ^ CT[i+0] ;
+                y4 = gmul2f5(CT[i+3]) ^ CT[i+1] ;
                 q0 = y1^y2^CT[i+1]; q1= y2^y3^CT[i+2]; q2 = y3^y4^CT[i+3]; q3= y4^y1^CT[i+0];
                 CT[i+0]=q0; CT[i+1]=q1;CT[i+2]=q2;CT[i+3]=q3;
 }
 }
-void enc_s01_n03(unsigned char* PT, unsigned char* Key, unsigned char* CT)
+void enc_s02_n03(unsigned char* PT, unsigned char* Key, unsigned char* CT)
 {
 int i,round;
-unsigned char RKey[176];
+unsigned char RKey[240];
 unsigned char t1,t2;
-for(i=0;i<16;i++) RKey [i]=Key[i];
-expand_keyf2(RKey);
+for(i=0;i<32;i++) RKey [i]=Key[i];
+expand_keyf5(RKey);
 for(i=0;i<16;i++) CT[i]=PT[i]^RKey[i];
-for(round=1;round<=10;round++)
+for(round=1;round<=14;round++)
 {
-  for(i=0;i<16;i++) CT[i] = sbox_f2[ CT[i] ] ;
+  for(i=0;i<16;i++) CT[i] = sboxf5[ CT[i] ] ;
 t1 = CT[1]; CT[1]=CT[5]; CT[5]=CT[9]; CT[9]=CT[13];CT[13]=t1;
 t1 = CT[2]; CT[2]=CT[10]; t2= CT[6]; CT[6]=CT[14]; CT[10]= t1; CT[14] = t2;
 t1 = CT[15]; CT[15]=CT[11]; CT[11]=CT[7]; CT[7] = CT[3]; CT[3]=t1;
-if(round!=10)
-Mcol (CT);
+if(round!=14)
+Mcolf5 (CT);
 for(i=0;i<16;i++) CT[i]=CT[i]^RKey[i+round*16];
 }
-}
-unsigned char conv (char t)
-{
-   if(t >= 'A' && t <='F') return t-'A'+10;
-   else if (t >= 'a' && t <='f') return t-'a'+10;
-   else return t-'0';
 }

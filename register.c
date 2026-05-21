@@ -126,7 +126,7 @@ int main(int argc, char **argv){
  
        
       if(strncmp((tmp),"Security_level",14)==0) {slevel=atoi(tmp1); }//printf("slevel=%d\n",slevel);}
-      if(strncmp((tmp),"Makefile_Path",13)==0)  {strcpy(df,tmp1);}//printf("%s\n",df);}
+      if(strncmp((tmp),"Makefile_Path",13)==0)  {strcpy(df,tmp1); printf("%s\n",df);}
       if(strncmp((tmp),"Toplevel_file_PATH",18)==0) {strcpy(tf,tmp1);}// printf("%s\n",tf); }  
       if(strncmp((tmp),"Toplevel_file",13)==0)      {strcpy(pf,tmp1);}// printf("%s\n",pf);}
       if(strncmp((tmp),"Function_name",13)==0)      {strcpy(fn,tmp1);}// printf("%s\n",fn);}
@@ -181,11 +181,11 @@ int main(int argc, char **argv){
    sprintf(com2, "make %s -C %s",obj,df); 
    rt=system(com2);
    if(rt) { fprintf(stderr, "Make command failed!! objfile could not be created ! make sure make %s creates %s\n",obj,obj );return 4;}   
-
+ 
      //test if implementation is correct
    
     if(g!=NULL){
-       while (fgets(string, sizeof(string), f)) {   
+       while (fgets(string, sizeof(string), g)) {   
  
       if(strncmp(string,"    // insert_func here",23)==0)    
       {
@@ -198,7 +198,7 @@ int main(int argc, char **argv){
    }
      fclose(g);      fclose(h); 
  }
-   
+ 
    
    sprintf(com2,"gcc %s %s/%s -o test",app1,df,obj);
    puts(com2);
@@ -225,7 +225,8 @@ int main(int argc, char **argv){
    ///
 
    if(rval==0)
-   system(com1);
-   
+   {  system("gcc -o generate gen.c");
+      system(com1);
+   }
    
 }

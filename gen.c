@@ -16,9 +16,10 @@ int main(int argc, char **argv)
     char libf[]= "./LIB";
     FILE *f = fopen("header.h","r"); 
     FILE *f1 = fopen("header1.h","w");
-    FILE *f2 = fopen("wrapper.c","w");    
+    FILE *f2 = fopen("wrapper.c","w"); 
+    FILE *f3 = fopen("header.h","r");        
     int h,slevel;
-    int opt, i  ;
+    int opt, i ,cpu=0 ,rt;
     while((opt = getopt(argc, argv, "s:p:t:f:n:b:")) != -1)  
     {  
  
@@ -97,14 +98,15 @@ int main(int argc, char **argv)
             
             if (!strncmp(str,"///",3) && str[3]-'0'==slevel) {
                 h=atoi(str+5);
-                sprintf(tmp,"%d",++h);
-                str[6]=0;
-                strcat(str,tmp);
-                fprintf(f1,"%s", str);
+                h++;
+                //sprintf(tmp,"%d",++h);
+                //str[6]=0;
+                //strcat(str,tmp);
+                //fprintf(f1,"%s", str);
                 
             }
             else if(!strncmp(str,"//e",3)){
-            fprintf(f1,"//e\nvoid enc_s%02d_n%02d (unsigned char *, unsigned char *, unsigned char *); \n//\n", slevel,h); 
+            //fprintf(f1,"//e\nvoid enc_s%02d_n%02d (unsigned char *, unsigned char *, unsigned char *); \n//\n", slevel,h); 
             sprintf(app,"enc_s%02d_n%02d", slevel,h);
             
             //preprocess file to source
@@ -131,22 +133,21 @@ int main(int argc, char **argv)
             puts(com1);
             system(com1);
              }
-            else 
-            fprintf(f1,"%s", str);
+            //else 
+            //fprintf(f1,"%s", str);
         }
  
         // Close the file stream once all lines have been
         // read.
         fclose(f);
-        fclose(f1);  
+       // fclose(f1);  
     }
     else {
         // Print an error message to the standard error
         // stream if the file cannot be opened.
         fprintf(stderr, "Unable to open file!\n");
     }
-   system("rm header.h");
-   system("mv header1.h header.h");  
+   
     
    //make objfile 
    
@@ -159,17 +160,53 @@ int main(int argc, char **argv)
    
    //compile profiler with objectfile
    
-   sprintf(com1,"gcc -o profile profile.c %s/%s.o -ldl -rdynamic",libf,app);
+   sprintf(com1,"gcc -o internalprofile internalprofile.c %s/%s.o -ldl -rdynamic",libf,app);
+   printf("profile command : ");
+   puts(com1);
+   system(com1);
+   
+   sprintf(com1,"gcc -o profile profile01.c");
    printf("profile command : ");
    puts(com1);
    system(com1);
    
    //run profiler
-   sprintf(com1, "./profile %d %d",slevel,h);
-   system(com1);
+   sprintf(com1, "./profile %d %d %d",slevel,h,cpu);
+   rt=system(com1);
  
+   if(!rt){
    
+       if (f3 != NULL) {
+        // Read each line from the file and store it in the
+        // 'line' buffer.
+        while (fgets(str, sizeof(str), f3)) {
+            // Print each line to the standard output.
+            
+            if (!strncmp(str,"///",3) && str[3]-'0'==slevel) {
+                h=atoi(str+5);
+                sprintf(tmp,"%d",++h);
+                str[6]=0;
+                strcat(str,tmp);
+                fprintf(f1,"%s\n", str);
+                
+            }
+            else if(!strncmp(str,"//e",3)){
+            fprintf(f1,"//e\nvoid enc_s%02d_n%02d (unsigned char *, unsigned char *, unsigned char *); \n//\n", slevel,h); 
+            
+             }
+            else 
+              fprintf(f1,"%s", str);
+        }
+         
+        // Close the file stream once all lines have been
+        // read.
+        fclose(f3);
+        fclose(f1);  
+    }
    
+   }
+   system("rm header.h");
+   system("mv header1.h header.h");  
    
    
   return 0;
