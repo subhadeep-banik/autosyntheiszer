@@ -1,6 +1,7 @@
 1 To begin with run
 
 > sudo su
+
 > ./reset
 
 It will clear out the library folder, clear out db.yaml file, and reset the header.h file 
@@ -9,8 +10,11 @@ It will clear out the library folder, clear out db.yaml file, and reset the head
 2 to register each implementation run
 
 > gcc -o generate gen.c
+
 > gcc -o register register.c
+
 > ./register -c "config_file"
+
 
 config file must be in each source directory 
 
@@ -35,11 +39,13 @@ TODO bash script....
 
 5 run 
 > gcc -shared ./LIB/*.o -o lib_enc.so
+
 > export LD_LIBRARY_PATH=:<library_path>
 
 to test ... change the test.c file to change synthesize parameters and run 
-> gcc test.c -L./LIB/ -lenc -ldl -rdynamic -o test
-> ./test  
 
+> gcc test.c -L./LIB/ -lenc -ldl -rdynamic -o test
+
+> ./test  
 
 
